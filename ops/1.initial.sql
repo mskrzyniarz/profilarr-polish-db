@@ -2,8 +2,7 @@
 -- Polish Compact Media PCD - Initial Operations
 -- ============================================================================
 -- Reuse notes:
--- - Reused patterns from Dictionarry-Hub/database and Dictionarry-Hub/trash-pcd
--- - Dumpstarr repository was not publicly discoverable at implementation time
+-- - Reused patterns from Dictionarry-Hub/database, Dumpstarr/Database, and Dictionarry-Hub/trash-pcd
 -- - New patterns were added only for Polish-specific language/group logic and AI labeling
 
 -- ============================================================================
@@ -59,11 +58,12 @@ INSERT INTO regular_expressions (name, pattern, description) VALUES (
     '3D video markers'
 );
 
--- Reused from Dictionarry-Hub/database / trash-pcd
+-- Reused from Dictionarry-Hub/database / Dumpstarr/Database / trash-pcd
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('AV1', '\b(AV1)\b', 'AV1 codec marker');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('AVC', '[xh][ ._-]?264|\bAVC(\b|\d)', 'AVC/x264 family marker');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('HEVC x265', '^(?!.*(?i:remux))(?=.*([x]\s?(\.?265)\b|HEVC|\bDS4K\b)).*$', 'HEVC/x265 family marker');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('10bit', '10[.-]?bit', '10-bit video marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('Upscaled', '(?<=\b\d{3,4}p\b).*\b(AI[ ._-]?Enhanced|UPS(UHD)?|Upscaled?([ ._-]?UHD)?|UpRez)\b', 'Upscaled marker reused from Dumpstarr/Database');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('Dolby Vision', '\b(dv(?![ .](HLG|SDR))|dovi|dolby[ .]?vision)\b', 'Dolby Vision marker');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('HDR10+', '\bHDR10.?(\+|P(lus)?\b)', 'HDR10+ marker');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('HDR10', '\bHDR10(?!\+|Plus)\b', 'HDR10 marker');
@@ -79,6 +79,7 @@ INSERT INTO regular_expressions (name, pattern, description) VALUES ('Line Dubbe
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('Mic Dubbed', '\b(MD|AC3MD|Mic[ .-]?Dubbed)\b', 'Mic dubbed marker');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('MULTi', '(?i)\b(MULTi)(\b|\d)', 'MULTi marker from trash-pcd (case-insensitive adaptation)');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('Multi', '\b(Multi)(?![ ._-]?sub(s)?)(\b|\d)', 'Multi marker from trash-pcd');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('1080p or 2160p', '\b(1080p|2160p)\b', 'High-resolution marker used for codec-missing heuristic');
 
 -- Project-specific Polish and AI patterns
 INSERT INTO regular_expressions (name, pattern, description) VALUES (
@@ -141,6 +142,8 @@ INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES (
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('AV1', 'Codec');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('HEVC x265', 'Codec');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('AVC', 'Codec');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Upscaled', 'AI');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Upscaled', 'Video');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Dolby Vision', 'HDR');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('HDR10+', 'HDR');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('HDR10', 'HDR');
@@ -153,6 +156,7 @@ INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES (
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Dolby Digital +', 'Audio');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Dolby Digital', 'Audio');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('5.1 Surround', 'Audio');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('1080p or 2160p', 'Resolution');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DD2.0', 'Audio');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DDP5.1', 'Audio');
 
@@ -214,9 +218,11 @@ INSERT INTO custom_formats (name, description, include_in_rename) VALUES ('Resol
 INSERT INTO custom_formats (name, description, include_in_rename) VALUES ('Codec AV1', 'Codec preference tier', 0);
 INSERT INTO custom_formats (name, description, include_in_rename) VALUES ('Codec HEVC x265', 'Codec preference tier', 0);
 INSERT INTO custom_formats (name, description, include_in_rename) VALUES ('Codec AVC x264', 'Codec preference tier', 0);
+INSERT INTO custom_formats (name, description, include_in_rename) VALUES ('Codec x265 Missing', 'Penalty when 1080p/2160p release has no AV1/HEVC/AVC codec marker in title', 0);
 
 -- HDR/video features
 INSERT INTO custom_formats (name, description, include_in_rename) VALUES ('Dolby Vision', 'Video enhancement preference', 0);
+INSERT INTO custom_formats (name, description, include_in_rename) VALUES ('Dolby Vision Without Fallback', 'Penalty for Dolby Vision releases without HDR fallback marker', 0);
 INSERT INTO custom_formats (name, description, include_in_rename) VALUES ('HDR10+', 'Video enhancement preference', 0);
 INSERT INTO custom_formats (name, description, include_in_rename) VALUES ('HDR10', 'Video enhancement preference', 0);
 INSERT INTO custom_formats (name, description, include_in_rename) VALUES ('HDR', 'Video enhancement preference', 0);
@@ -282,8 +288,12 @@ INSERT INTO custom_format_tags (custom_format_name, tag_name) VALUES ('Resolutio
 INSERT INTO custom_format_tags (custom_format_name, tag_name) VALUES ('Codec AV1', 'Codec');
 INSERT INTO custom_format_tags (custom_format_name, tag_name) VALUES ('Codec HEVC x265', 'Codec');
 INSERT INTO custom_format_tags (custom_format_name, tag_name) VALUES ('Codec AVC x264', 'Codec');
+INSERT INTO custom_format_tags (custom_format_name, tag_name) VALUES ('Codec x265 Missing', 'Codec');
+INSERT INTO custom_format_tags (custom_format_name, tag_name) VALUES ('Codec x265 Missing', 'Quality');
 
 INSERT INTO custom_format_tags (custom_format_name, tag_name) VALUES ('Dolby Vision', 'HDR');
+INSERT INTO custom_format_tags (custom_format_name, tag_name) VALUES ('Dolby Vision Without Fallback', 'HDR');
+INSERT INTO custom_format_tags (custom_format_name, tag_name) VALUES ('Dolby Vision Without Fallback', 'Quality');
 INSERT INTO custom_format_tags (custom_format_name, tag_name) VALUES ('HDR10+', 'HDR');
 INSERT INTO custom_format_tags (custom_format_name, tag_name) VALUES ('HDR10', 'HDR');
 INSERT INTO custom_format_tags (custom_format_name, tag_name) VALUES ('HDR', 'HDR');
@@ -402,6 +412,7 @@ INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, 
 
 -- AI
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('AI Generated / Upscaled', 'AI Marker', 'release_title', 'all', 0, 1);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('AI Generated / Upscaled', 'Upscaled Marker', 'release_title', 'all', 0, 0);
 
 -- File Above 12GB (Radarr only)
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('File Above 12GB', 'Above 12GB', 'size', 'radarr', 0, 1);
@@ -431,9 +442,17 @@ INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, 
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Codec AVC x264', 'AVC', 'release_title', 'all', 0, 1);
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Codec AVC x264', 'Not AV1', 'release_title', 'all', 1, 1);
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Codec AVC x264', 'Not HEVC x265', 'release_title', 'all', 1, 1);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Codec x265 Missing', '1080p or 2160p', 'release_title', 'all', 0, 1);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Codec x265 Missing', 'Not AV1', 'release_title', 'all', 1, 1);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Codec x265 Missing', 'Not HEVC x265', 'release_title', 'all', 1, 1);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Codec x265 Missing', 'Not AVC', 'release_title', 'all', 1, 1);
 
 -- HDR
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Dolby Vision', 'Dolby Vision', 'release_title', 'all', 0, 1);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Dolby Vision Without Fallback', 'Dolby Vision', 'release_title', 'all', 0, 1);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Dolby Vision Without Fallback', 'Not HDR10+', 'release_title', 'all', 1, 1);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Dolby Vision Without Fallback', 'Not HDR10', 'release_title', 'all', 1, 1);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Dolby Vision Without Fallback', 'Not HDR', 'release_title', 'all', 1, 1);
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('HDR10+', 'HDR10+', 'release_title', 'all', 0, 1);
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('HDR10+', 'Not Dolby Vision', 'release_title', 'all', 1, 1);
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('HDR10', 'HDR10', 'release_title', 'all', 0, 1);
@@ -484,6 +503,7 @@ INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expr
 
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('3D', '3D', '3D');
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('AI Generated / Upscaled', 'AI Marker', 'AI Generated Upscaled');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('AI Generated / Upscaled', 'Upscaled Marker', 'Upscaled');
 
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Explicit', 'Polish Explicit Audio', 'Polish Explicit Audio');
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'PABLO', 'PABLO Group');
@@ -502,8 +522,16 @@ INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expr
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Codec AVC x264', 'AVC', 'AVC');
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Codec AVC x264', 'Not AV1', 'AV1');
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Codec AVC x264', 'Not HEVC x265', 'HEVC x265');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Codec x265 Missing', '1080p or 2160p', '1080p or 2160p');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Codec x265 Missing', 'Not AV1', 'AV1');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Codec x265 Missing', 'Not HEVC x265', 'HEVC x265');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Codec x265 Missing', 'Not AVC', 'AVC');
 
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Dolby Vision', 'Dolby Vision', 'Dolby Vision');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Dolby Vision Without Fallback', 'Dolby Vision', 'Dolby Vision');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Dolby Vision Without Fallback', 'Not HDR10+', 'HDR10+');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Dolby Vision Without Fallback', 'Not HDR10', 'HDR10');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Dolby Vision Without Fallback', 'Not HDR', 'HDR');
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('HDR10+', 'HDR10+', 'HDR10+');
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('HDR10+', 'Not Dolby Vision', 'Dolby Vision');
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('HDR10', 'HDR10', 'HDR10');
@@ -580,8 +608,10 @@ INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Movies', 'Codec AV1', 'radarr', 20000);
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Movies', 'Codec HEVC x265', 'radarr', 15000);
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Movies', 'Codec AVC x264', 'radarr', 5000);
+INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Movies', 'Codec x265 Missing', 'radarr', -2000);
 
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Movies', 'Dolby Vision', 'radarr', 10000);
+INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Movies', 'Dolby Vision Without Fallback', 'radarr', -6000);
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Movies', 'HDR10+', 'radarr', 9000);
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Movies', 'HDR10', 'radarr', 7000);
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Movies', 'HDR', 'radarr', 5000);
@@ -608,8 +638,10 @@ INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Series', 'Codec AV1', 'sonarr', 20000);
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Series', 'Codec HEVC x265', 'sonarr', 15000);
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Series', 'Codec AVC x264', 'sonarr', 5000);
+INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Series', 'Codec x265 Missing', 'sonarr', -2000);
 
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Series', 'Dolby Vision', 'sonarr', 10000);
+INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Series', 'Dolby Vision Without Fallback', 'sonarr', -6000);
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Series', 'HDR10+', 'sonarr', 9000);
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Series', 'HDR10', 'sonarr', 7000);
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score) VALUES ('Polish Compact Series', 'HDR', 'sonarr', 5000);
@@ -633,27 +665,27 @@ INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_
 -- Unit assumption follows Arr-style rate values to target compact outcomes.
 -- ============================================================================
 
--- Radarr: tuned for ~100 minute movies (target 5-8GB at 2160p, hard cap enforced by CF)
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-2160p', 2500, 7000, 4500);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-2160p', 2200, 6200, 4000);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-2160p', 2800, 7600, 4800);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-1080p', 1200, 3500, 2200);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-1080p', 1000, 3000, 1900);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-1080p', 1300, 3800, 2400);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-720p', 700, 2000, 1300);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-720p', 600, 1800, 1100);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-720p', 800, 2200, 1400);
+-- Radarr: tuned for ~100 minute movies (target ~5-8.5GB at 2160p, ~2.5-5GB at 1080p, ~1-3GB at 720p; hard cap >12GB enforced by CF)
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-2160p', 3000, 8500, 6200);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-2160p', 2600, 7600, 5600);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-2160p', 3200, 9000, 6700);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-1080p', 1500, 5000, 3300);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-1080p', 1300, 4500, 3000);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-1080p', 1700, 5500, 3600);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-720p', 600, 1800, 1200);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-720p', 500, 1600, 1000);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-720p', 700, 2000, 1300);
 
--- Sonarr: tuned for compact episodes and season packs
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-2160p', 1400, 4200, 2800);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBRip-2160p', 1200, 3600, 2400);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-2160p', 1500, 4500, 3000);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-1080p', 700, 2200, 1400);
+-- Sonarr: tuned for compact episodes and season packs (target ~1-3GB at 2160p, ~0.7-2GB at 1080p, ~0.35-1GB at 720p per episode)
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-2160p', 1000, 3000, 2100);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBRip-2160p', 900, 2700, 1900);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-2160p', 1100, 3200, 2200);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-1080p', 700, 2000, 1400);
 INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBRip-1080p', 600, 1800, 1200);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-1080p', 750, 2400, 1500);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-720p', 350, 1200, 700);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBRip-720p', 300, 1000, 600);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-720p', 400, 1300, 800);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-1080p', 800, 2200, 1500);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-720p', 350, 1000, 700);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBRip-720p', 300, 900, 600);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-720p', 400, 1100, 750);
 
 -- ============================================================================
 -- TEST CORPUS
@@ -667,6 +699,14 @@ INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, 
 -- AI ban
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('AI Generated / Upscaled', 'Example Movie Title (2026) [1080p] [DCPRiP] [DD2.0] [x265-AdL] [Napisy PL (AI)]', 'movie', 1, 'Explicit AI subtitle marker');
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('AI Generated / Upscaled', 'Example Movie Title (2026) PLDUB.1080p.AMZN.WEB-DL.H264.AC3-MAXX / Dubbing PL (Oficjalny)', 'movie', 0, 'No AI marker');
+
+-- Dolby Vision without fallback penalty
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Dolby Vision Without Fallback', 'Example Movie Title (2026) 2160p.WEB-DL.DV.10bit.DDP5.1-MAXX', 'movie', 1, 'Dolby Vision marker without HDR fallback marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Dolby Vision Without Fallback', 'Example Movie Title (2026) 2160p.WEB-DL.DV.HDR10Plus.10bit.DDP5.1-MAXX', 'movie', 0, 'Dolby Vision with HDR fallback marker');
+
+-- Codec marker missing penalty
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Codec x265 Missing', 'Example Movie Title (2026) 2160p.WEB-DL.DV.HDR10Plus.DDP5.1-MAXX', 'movie', 1, '1080p/2160p release without AV1/HEVC/AVC marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Codec x265 Missing', 'Example Movie Title (2026) 1080p.WEB-DL.HEVC.DDP5.1-MAXX', 'movie', 0, 'Has HEVC marker');
 
 -- 3D ban
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('3D', 'Example Movie Title (2026) 1080p.BluRay3D.DD5.1.x264-GROUP', 'movie', 1, 'Contains BluRay3D marker');

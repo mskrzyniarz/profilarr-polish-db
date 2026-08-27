@@ -1,7 +1,6 @@
-# Profilarr Polish Compact DB
+# Polish Compact Profilarr Database
 
 Polish-focused, compact-media Profilarr Compliant Database (PCD) for:
-
 - Radarr (movies)
 - Sonarr (TV series)
 
@@ -17,6 +16,20 @@ This database is designed to enforce a strict language-first selection strategy 
 4. Allow non-Polish fallback releases temporarily
 5. Upgrade fallback releases when higher language tiers become available
 6. Keep technical preferences strictly secondary to language tiers
+
+### Size Targets (Guideline)
+
+This database also targets compact file sizes as a practical baseline.
+
+Movies (Radarr):
+- 2160p: usually around 5-8.5 GB (hard automatic rejection above 12 GB)
+- 1080p: usually around 2.5-5 GB
+- 720p: usually around 1-3 GB
+
+Episodes (Sonarr):
+- 2160p: usually around 1-3 GB per episode
+- 1080p: usually around 0.7-2 GB per episode
+- 720p: usually around 0.35-1 GB per episode
 
 ## Supported Applications
 
@@ -35,19 +48,17 @@ This database is designed to enforce a strict language-first selection strategy 
 ## Language Priority System
 
 Primary tier scores:
-
 - `Polish Explicit`: `+500000`
 - `Trusted MULTi`: `+400000`
 - `Polish Subtitles`: `+300000`
 - Fallback (no language-tier match): `0`
 
 Hard bans:
-
 - Every hard ban CF score is `-999999`
 
 The mandatory tier ordering is preserved:
 
-`Polish Explicit > Trusted MULTi > Polish Subtitles > Fallback`
+`Polish Explicit` > `Trusted MULTi` > `Polish Subtitles` > `Fallback`
 
 ## Trusted Polish Release Groups
 
@@ -82,7 +93,6 @@ Important:
 ## Hard-Ban Policy
 
 The following are hard banned (`-999999`):
-
 - `Unaccepted Media Quality`
 - `3D`
 - `AI Generated / Upscaled`
@@ -90,7 +100,7 @@ The following are hard banned (`-999999`):
 
 ### Unaccepted Media Quality includes
 
-- CAM/TS/TC/SCREENER/WORKPRINT-style release markers
+- `CAM`/`TS`/`TC`/`SCREENER`/`WORKPRINT` - style release markers
 - DCP-style theatrical low-quality markers covered by reused CAM-core pattern
 - line/mic dubbed low-quality markers
 
@@ -111,7 +121,6 @@ Polish language markers never override hard bans.
 ## Resolution Preference
 
 Within the same language tier:
-
 - `2160p`: `+40000`
 - `1080p`: `+25000`
 - `720p`: `+10000`
@@ -119,18 +128,18 @@ Within the same language tier:
 ## Codec Preference
 
 Within the same language/resolution tier:
-
 - `AV1`: `+20000`
 - `HEVC/x265`: `+15000`
 - `AVC/x264`: `+5000`
+- `Codec x265 Missing`: `-2000` (applies to `1080p/2160p` titles missing `AV1/HEVC/AVC` markers)
 
 No hard ban is applied to `x264`, `AVC`, or `XviD`.
 
 ## HDR Preference
 
 Secondary video bonuses:
-
 - Dolby Vision: `+10000`
+- Dolby Vision Without Fallback: `-6000` (Dolby Vision marker with no HDR fallback marker)
 - HDR10+: `+9000`
 - HDR10: `+7000`
 - HDR: `+5000`
@@ -141,7 +150,6 @@ Conditions include negations to reduce overlapping HDR double-stacking.
 ## Audio Preference
 
 Secondary audio bonuses:
-
 - Atmos: `+8000`
 - DTS:X: `+7000`
 - TrueHD: `+6000`
@@ -166,7 +174,6 @@ Remux and BR-DISK are disabled in profile quality ordering for compactness.
 Language tier gap is `100000` between primary tiers.
 
 Configured technical maximum is constrained below that gap:
-
 - Max resolution bonus: `40000`
 - Max codec bonus: `20000`
 - Max HDR stack (after negation design): `13000` (`Dolby Vision + 10bit`)
@@ -197,7 +204,6 @@ This repository does not claim unsupported native behavior.
 ## Test Coverage
 
 Custom format tests are included in [ops/1.initial.sql](ops/1.initial.sql) using the provided release-title corpus for:
-
 - hard-ban detection
 - Polish explicit detection
 - trusted MULTi detection
@@ -216,10 +222,14 @@ Note: title-based tests cannot validate file-size conditions directly because si
 ## Attribution / Reused Sources
 
 Patterns and conventions were reused from:
-
 - Dictionarry-Hub/database
+- Dumpstarr/Database
 - Dictionarry-Hub/trash-pcd
 - Dictionarry-Hub/schema
 
-`Dumpstarr` was requested in the original requirements, but no public repository was discoverable through GitHub API under that name at implementation time.
+## Credits
 
+This database was built by following the architecture and conventions used by the three PCD source databases below and by reusing selected tested patterns from them:
+- Dictionarry Database: https://github.com/Dictionarry-Hub/database
+- Dumpstarr Database: https://github.com/Dumpstarr/Database
+- TRaSH Guides PCD: https://github.com/Dictionarry-Hub/trash-pcd
