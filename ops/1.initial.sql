@@ -84,19 +84,19 @@ INSERT INTO regular_expressions (name, pattern, description) VALUES ('1080p or 2
 -- Project-specific Polish and AI patterns
 INSERT INTO regular_expressions (name, pattern, description) VALUES (
     'Polish Explicit Audio',
-    '(?i)(?:\bPL(?:DUB|DUBBING)\b|\bDUBBINGPL\b|\b(?:DUB|DUBBING|LEKTOR)[\s._-]*PL\b|\b(?:POLISH|POLSKI)\b)',
+    '(?i)(?:\bPL(?:DUB|DUBBING)\b|\bDUBBINGPL\b|\b(?:DUBB?ING?|LEKTOR)[\s._-]*PL\b|\b(?:POLISH|POLSKI)\b|(?<![A-Z])POL(?![A-Z])|\[PL\]|\.POL\.|\[(?:FILM[\s._-]*(?:PL|POLSKI)|POLSKI[\s._-]*FILM)\]|\[(?=[^\]]*PL)(?=[^\]]*(?:LEKTOR|NAPISY|DUBB?ING?|DUBB?))[^\]]+\]|\[(?=[^\]]*PL)(?:AUDIO|MULTI)[\s._-]*[A-Z]{2,}(?:/[A-Z]{2,})*\])',
     'Explicit Polish audio indicators'
 );
 
 INSERT INTO regular_expressions (name, pattern, description) VALUES (
     'Polish Subtitles',
-    '(?i)\b(?:NAPISY|SUB(?:TITLES|S)?)[\s._-]*PL\b',
+    '(?i)(?:\b(?:NAPISY|SUB(?:TITLES|S)?)[\s._-]*(?:PL|POL|POLSKIE)\b|\b(?:PL|POL)[\s._-]*SUB(?:TITLES|S)?\b|\bPOLSKIE[\s._-]*NAPISY\b|\b(?:POLISH|POLAND)[\s._-]*SUB(?:TITLES|S)?\b)',
     'Explicit Polish subtitle indicators'
 );
 
 INSERT INTO regular_expressions (name, pattern, description) VALUES (
     'AI Generated Upscaled',
-    '(?i)\b(?:AI[\s._-]?(?:DUB(?:BING)?|AUDIO|LEKTOR|VOICE|NAPISY|SUB(?:S|TITLES)?|UPSCALE[DR]?|UPSCALED|GEN(?:ERATED)?)|(?:DUB(?:BING)?|LEKTOR|AUDIO|NAPISY|SUB(?:S|TITLES)?|UPSCALE[DR]?|UPSCALED|GEN(?:ERATED)?)\s*(?:\(|\[)?AI(?:\)|\])?)\b',
+    '(?i)(?:\bAI[\s._-]?(?:DUBB?ING?|DUBB?|AUDIO|LEKTOR|VOICE|NAPISY|SUB(?:S|TITLES)?|UPSCALE[DR]?|UPSCALED|GEN(?:ERATED)?)\b|\b(?:DUBB?ING?|DUBB?|LEKTOR|AUDIO|NAPISY|SUB(?:S|TITLES)?|UPSCALE[DR]?|UPSCALED|GEN(?:ERATED)?)[\s._-]*(?:PL[\s._-]*)?(?:\(|\[)?AI(?:\)|\])?\b|\[(?=[^\]]*\bAI\b)(?=[^\]]*(?:PL|LEKTOR|NAPISY|DUBB?ING?|DUBB?|AUDIO|SUB(?:S|TITLES)?))[^\]]+\])',
     'Explicit AI-generated/upscaled media markers'
 );
 
@@ -105,7 +105,40 @@ INSERT INTO regular_expressions (name, pattern, description) VALUES ('MAXX Group
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('AdL Group', '(?i)(?:\[AdL\]|-AdL\b|\bAdL\b)', 'Trusted Polish release group marker');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('RX Group', '(?i)(?:\[RX\]|-RX\b|\bRX\b)', 'Trusted Polish release group marker');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('KiT Group', '(?i)(?:\[KiT\]|-KiT\b|\bKiT\b)', 'Trusted Polish release group marker');
-INSERT INTO regular_expressions (name, pattern, description) VALUES ('Trusted Polish Group Any', '(?i)(?:\[PABLO\]|-PABLO\b|\bPABLO\b|\[MAXX\]|-MAXX\b|\bMAXX\b|\[AdL\]|-AdL\b|\bAdL\b|\[RX\]|-RX\b|\bRX\b|\[KiT\]|-KiT\b|\bKiT\b)', 'Composite guard for trusted Polish groups used by Trusted MULTi logic');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('DReaM Group', '(?i)(?:\[DReaM\]|-DReaM\b|\bDReaM\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('DENDA Group', '(?i)(?:\[DENDA\]|-DENDA\b|\bDENDA\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('LTN Group', '(?i)(?:\[LTN\]|-LTN\b|\bLTN\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('OzW Group', '(?i)(?:\[OzW\]|-OzW\b|\bOzW\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('wasik Group', '(?i)(?:\[wasik\]|-wasik\b|\bwasik\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('ELiTE Group', '(?i)(?:\[ELiTE\]|-ELiTE\b|\bELiTE\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('LTS Group', '(?i)(?:\[LTS\]|-LTS\b|\bLTS\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('J Group', '(?i)(?:\[J\]|-J\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('DZiDEK Group', '(?i)(?:\[DZiDEK\]|-DZiDEK\b|\bDZiDEK\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('FT Group', '(?i)(?:\[FT\]|-FT\b|\bFT\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('CoLO Group', '(?i)(?:\[CoLO\]|-CoLO\b|\bCoLO\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('MiNS Group', '(?i)(?:\[MiNS\]|-MiNS\b|\bMiNS\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('K83 Group', '(?i)(?:\[K83\]|-K83\b|\bK83\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('DSiTE Group', '(?i)(?:\[DSiTE\]|-DSiTE\b|\bDSiTE\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('GUN Group', '(?i)(?:\[GUN\]|-GUN\b|\bGUN\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('BiRD Group', '(?i)(?:\[BiRD\]|-BiRD\b|\bBiRD\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('Ralf Group', '(?i)(?:\[Ralf\]|-Ralf\b|\bRalf\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('S78 Group', '(?i)(?:\[S78\]|-S78\b|\bS78\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('FOX Group', '(?i)(?:\[FOX\]|-FOX\b|\bFOX\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('LLA Group', '(?i)(?:\[LLA\]|-LLA\b|\bLLA\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('S56 Group', '(?i)(?:\[S56\]|-S56\b|\bS56\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('LEX Group', '(?i)(?:\[LEX\]|-LEX\b|\bLEX\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('AZQ Group', '(?i)(?:\[AZQ\]|-AZQ\b|\bAZQ\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('XuploaD Group', '(?i)(?:\[XuploaD\]|-XuploaD\b|\bXuploaD\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('WiKi Group', '(?i)(?:\[WiKi\]|-WiKi\b|\bWiKi\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('K37 Group', '(?i)(?:\[K37\]|-K37\b|\bK37\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('NN Group', '(?i)(?:\[NN\]|-NN\b|\bNN\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('RobSil Group', '(?i)(?:\[RobSil\]|-RobSil\b|\bRobSil\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('KPFR Group', '(?i)(?:\[KPFR\]|-KPFR\b|\bKPFR\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('Net Group', '(?i)(?:\[Net\]|-Net\b|\bNet\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('R22 Group', '(?i)(?:\[R22\]|-R22\b|\bR22\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('Mixio Group', '(?i)(?:\[Mixio\]|-Mixio\b|\bMixio\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('Nitro Group', '(?i)(?:\[Nitro\]|-Nitro\b|\bNitro\b)', 'Trusted Polish release group marker');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('Trusted Polish Group Any', '(?i)(?:\[PABLO\]|-PABLO\b|\bPABLO\b|\[MAXX\]|-MAXX\b|\bMAXX\b|\[AdL\]|-AdL\b|\bAdL\b|\[RX\]|-RX\b|\bRX\b|\[KiT\]|-KiT\b|\bKiT\b|\[DReaM\]|-DReaM\b|\bDReaM\b|\[DENDA\]|-DENDA\b|\bDENDA\b|\[LTN\]|-LTN\b|\bLTN\b|\[OzW\]|-OzW\b|\bOzW\b|\[wasik\]|-wasik\b|\bwasik\b|\[ELiTE\]|-ELiTE\b|\bELiTE\b|\[LTS\]|-LTS\b|\bLTS\b|\[J\]|-J\b|\[DZiDEK\]|-DZiDEK\b|\bDZiDEK\b|\[FT\]|-FT\b|\bFT\b|\[CoLO\]|-CoLO\b|\bCoLO\b|\[MiNS\]|-MiNS\b|\bMiNS\b|\[K83\]|-K83\b|\bK83\b|\[DSiTE\]|-DSiTE\b|\bDSiTE\b|\[GUN\]|-GUN\b|\bGUN\b|\[BiRD\]|-BiRD\b|\bBiRD\b|\[Ralf\]|-Ralf\b|\bRalf\b|\[S78\]|-S78\b|\bS78\b|\[FOX\]|-FOX\b|\bFOX\b|\[LLA\]|-LLA\b|\bLLA\b|\[S56\]|-S56\b|\bS56\b|\[LEX\]|-LEX\b|\bLEX\b|\[AZQ\]|-AZQ\b|\bAZQ\b|\[XuploaD\]|-XuploaD\b|\bXuploaD\b|\[WiKi\]|-WiKi\b|\bWiKi\b|\[K37\]|-K37\b|\bK37\b|\[NN\]|-NN\b|\bNN\b|\[RobSil\]|-RobSil\b|\bRobSil\b|\[KPFR\]|-KPFR\b|\bKPFR\b|\[Net\]|-Net\b|\bNet\b|\[R22\]|-R22\b|\bR22\b|\[Mixio\]|-Mixio\b|\bMixio\b|\[Nitro\]|-Nitro\b|\bNitro\b)', 'Composite guard for trusted Polish groups used by Trusted MULTi logic');
 
 INSERT INTO regular_expressions (name, pattern, description) VALUES (
     'DDP5.1',
@@ -189,6 +222,105 @@ INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES (
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('KiT Group', 'Release Group');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('KiT Group', 'Polish');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('KiT Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DReaM Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DReaM Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DReaM Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DENDA Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DENDA Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DENDA Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('LTN Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('LTN Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('LTN Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('OzW Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('OzW Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('OzW Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('wasik Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('wasik Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('wasik Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('ELiTE Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('ELiTE Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('ELiTE Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('LTS Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('LTS Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('LTS Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('J Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('J Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('J Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DZiDEK Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DZiDEK Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DZiDEK Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('FT Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('FT Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('FT Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('CoLO Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('CoLO Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('CoLO Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('MiNS Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('MiNS Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('MiNS Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('K83 Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('K83 Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('K83 Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DSiTE Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DSiTE Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('DSiTE Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('GUN Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('GUN Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('GUN Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('BiRD Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('BiRD Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('BiRD Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Ralf Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Ralf Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Ralf Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('S78 Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('S78 Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('S78 Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('FOX Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('FOX Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('FOX Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('LLA Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('LLA Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('LLA Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('S56 Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('S56 Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('S56 Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('LEX Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('LEX Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('LEX Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('AZQ Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('AZQ Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('AZQ Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('XuploaD Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('XuploaD Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('XuploaD Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('WiKi Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('WiKi Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('WiKi Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('K37 Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('K37 Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('K37 Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('NN Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('NN Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('NN Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('RobSil Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('RobSil Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('RobSil Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('KPFR Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('KPFR Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('KPFR Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Net Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Net Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Net Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('R22 Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('R22 Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('R22 Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Mixio Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Mixio Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Mixio Group', 'Trusted');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Nitro Group', 'Release Group');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Nitro Group', 'Polish');
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Nitro Group', 'Trusted');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Trusted Polish Group Any', 'Release Group');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Trusted Polish Group Any', 'Polish');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) VALUES ('Trusted Polish Group Any', 'Trusted');
@@ -425,6 +557,39 @@ INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, 
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'AdL', 'release_title', 'all', 0, 0);
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'RX', 'release_title', 'all', 0, 0);
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'KiT', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'DReaM', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'DENDA', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'LTN', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'OzW', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'wasik', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'ELiTE', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'LTS', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'J', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'DZiDEK', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'FT', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'CoLO', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'MiNS', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'K83', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'DSiTE', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'GUN', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'BiRD', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'Ralf', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'S78', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'FOX', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'LLA', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'S56', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'LEX', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'AZQ', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'XuploaD', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'WiKi', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'K37', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'NN', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'RobSil', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'KPFR', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'Net', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'R22', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'Mixio', 'release_title', 'all', 0, 0);
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Polish Release Group', 'Nitro', 'release_title', 'all', 0, 0);
 
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Trusted MULTi', 'MULTi', 'release_title', 'all', 0, 1);
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('Trusted MULTi', 'Trusted Polish Group Any', 'release_title', 'all', 0, 1);
@@ -511,6 +676,39 @@ INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expr
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'AdL', 'AdL Group');
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'RX', 'RX Group');
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'KiT', 'KiT Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'DReaM', 'DReaM Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'DENDA', 'DENDA Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'LTN', 'LTN Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'OzW', 'OzW Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'wasik', 'wasik Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'ELiTE', 'ELiTE Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'LTS', 'LTS Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'J', 'J Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'DZiDEK', 'DZiDEK Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'FT', 'FT Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'CoLO', 'CoLO Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'MiNS', 'MiNS Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'K83', 'K83 Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'DSiTE', 'DSiTE Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'GUN', 'GUN Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'BiRD', 'BiRD Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'Ralf', 'Ralf Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'S78', 'S78 Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'FOX', 'FOX Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'LLA', 'LLA Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'S56', 'S56 Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'LEX', 'LEX Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'AZQ', 'AZQ Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'XuploaD', 'XuploaD Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'WiKi', 'WiKi Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'K37', 'K37 Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'NN', 'NN Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'RobSil', 'RobSil Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'KPFR', 'KPFR Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'Net', 'Net Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'R22', 'R22 Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'Mixio', 'Mixio Group');
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Polish Release Group', 'Nitro', 'Nitro Group');
 
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Trusted MULTi', 'MULTi', 'MULTi');
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('Trusted MULTi', 'Trusted Polish Group Any', 'Trusted Polish Group Any');
@@ -699,6 +897,10 @@ INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, 
 -- AI ban
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('AI Generated / Upscaled', 'Example Movie Title (2026) [1080p] [DCPRiP] [DD2.0] [x265-AdL] [Napisy PL (AI)]', 'movie', 1, 'Explicit AI subtitle marker');
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('AI Generated / Upscaled', 'Example Movie Title (2026) PLDUB.1080p.AMZN.WEB-DL.H264.AC3-MAXX / Dubbing PL (Oficjalny)', 'movie', 0, 'No AI marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('AI Generated / Upscaled', 'Example Movie Title (2026) [Lektor PL AI] [1080p] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Lektor PL AI must be banned');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('AI Generated / Upscaled', 'Example Movie Title (2026) [Lektor PL i Napisy PL AI] [1080p] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Lektor/Napisy with AI must be banned');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('AI Generated / Upscaled', 'Example Movie Title (2026) [Dubbing PL & Napisy PL AI] [1080p] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Dubbing/Napisy with AI must be banned');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('AI Generated / Upscaled', 'Example Movie Title (2026) [Dubb PL & PL AI] [1080p] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Dubb variant with AI must be banned');
 
 -- Dolby Vision without fallback penalty
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Dolby Vision Without Fallback', 'Example Movie Title (2026) 2160p.WEB-DL.DV.10bit.DDP5.1-MAXX', 'movie', 1, 'Dolby Vision marker without HDR fallback marker');
@@ -715,12 +917,25 @@ INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, 
 -- Polish Explicit
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) PLDUB.2160p.MA.WEB-DL.DV.HDR.AV1.DDP5.1-MAXX / Dubbing PL (Oficjalny)', 'movie', 1, 'PLDUB explicit audio marker');
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) MULTi.1080p.AMZN.WEB-DL.x264.AC3-KiT / Dubbing PL & Napisy PL', 'movie', 1, 'Dubbing PL explicit audio marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) [1080p] [Lektor/NapisyPL] [WEB-DL] [H.264-FOX]', 'movie', 1, 'Bracketed Lektor/NapisyPL marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) [1080p] [Dubbing/NapisyPL] [WEB-DL] [H.264-FOX]', 'movie', 1, 'Bracketed Dubbing/NapisyPL marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) [2160p] [Audio-EN/FR/PL] [WEB-DL] [HEVC-KiT]', 'movie', 1, 'Bracketed Audio list includes PL in non-first position');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) [2160p] [Audio.EN/PL] [WEB-DL] [HEVC-KiT]', 'movie', 1, 'Bracketed Audio list with dot separator includes PL');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) [Film PL] [1080p] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Film PL marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) [Film Polski] [1080p] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Film Polski marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) [Polski Film] [1080p] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Polski Film marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) [NapisyDubbingPL] [1080p] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Concatenated NapisyDubbingPL marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) [DubbPLNapisyPL] [1080p] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Concatenated DubbPLNapisyPL marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) [NapisyPLLektorPL] [1080p] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Concatenated NapisyPLLektorPL marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) [MULTI-EN/FR/PL] [1080p] [WEB-DL] [H.264-KiT]', 'movie', 1, 'MULTI list with PL marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) .POL. [1080p] [WEB-DL] [H.264-KiT]', 'movie', 1, '.POL. marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) [PL] [1080p] [WEB-DL] [H.264-KiT]', 'movie', 1, '[PL] marker');
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Explicit', 'Example Movie Title (2026) [MULTi] [1080p] [AMZN] [WEB-DL] [H.264] [DD5.1-RX]', 'movie', 0, 'No explicit PL audio marker');
 
 -- Polish Release Group
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Release Group', 'Example Movie Title (2026) MULTi.1080p.AMZN.WEB-DL.x264.AC3-KiT', 'movie', 1, 'Trusted KiT marker');
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Release Group', 'Example Movie Title (2026) [MULTi] [1080p] [AMZN] [WEB-DL] [H.264] [DD5.1-RX]', 'movie', 1, 'Trusted RX marker');
-INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Release Group', 'Example Movie Title (2026) [720p] [WEB-DL] [XviD] [AC3-OzW] [Dubbing PL]', 'movie', 0, 'Untrusted group');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Release Group', 'Example Movie Title (2026) [720p] [WEB-DL] [XviD] [AC3-OzW] [Dubbing PL]', 'movie', 1, 'Trusted OzW marker');
 
 -- Trusted MULTi
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Trusted MULTi', 'Example Movie Title (2026) MULTi.1080p.AMZN.WEB-DL.x264.AC3-KiT', 'movie', 1, 'MULTi + trusted group');
@@ -731,3 +946,15 @@ INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, 
 -- Polish Subtitles
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [1080p] [DCPRiP] [DD2.0] [x265-AdL] [Napisy PL (AI)]', 'movie', 1, 'Polish subtitles marker present');
 INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [720p] [WEB-DL] [XviD] [AC3-OzW] [Dubbing PL]', 'movie', 0, 'No subtitle marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [1080p] [NAPISY POL] [WEB-DL] [H.264-KiT]', 'movie', 1, 'NAPISY POL marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [1080p] [SUB POL] [WEB-DL] [H.264-KiT]', 'movie', 1, 'SUB POL marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [1080p] [PL SUB] [WEB-DL] [H.264-KiT]', 'movie', 1, 'PL SUB marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [1080p] [POL SUB] [WEB-DL] [H.264-KiT]', 'movie', 1, 'POL SUB marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [1080p] [Napisy Polskie] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Napisy Polskie marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [1080p] [Polskie Napisy] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Polskie Napisy marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [1080p] [Polish Subtitles] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Polish Subtitles marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [1080p] [Polish Sub] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Polish Sub marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [1080p] [Polish Subs] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Polish Subs marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [1080p] [Poland Subtitles] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Poland Subtitles marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [1080p] [Poland Sub] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Poland Sub marker');
+INSERT INTO custom_format_tests (custom_format_name, title, type, should_match, description) VALUES ('Polish Subtitles', 'Example Movie Title (2026) [1080p] [Poland Subs] [WEB-DL] [H.264-KiT]', 'movie', 1, 'Poland Subs marker');

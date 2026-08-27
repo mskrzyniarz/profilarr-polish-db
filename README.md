@@ -64,11 +64,7 @@ The mandatory tier ordering is preserved:
 
 Each trusted group has an individual regex:
 
-- `PABLO`
-- `MAXX`
-- `AdL`
-- `RX`
-- `KiT`
+`AdL`, `AZQ`, `BiRD`, `CoLO`, `DENDA`, `DReaM`, `DSiTE`, `DZiDEK`, `ELiTE`, `FOX`, `FT`, `GUN`, `J`, `K37`, `K83`, `KiT`, `KPFR`, `LEX`, `LLA`, `LTN`, `LTS`, `MAXX`, `MiNS`, `Mixio`, `Net`, `Nitro`, `NN`, `OzW`, `PABLO`, `R22`, `Ralf`, `RobSil`, `RX`, `S56`, `S78`, `wasik`, `WiKi`, `XuploaD`.
 
 They are aggregated by `Polish Release Group` (score `0`, classification-only).
 
