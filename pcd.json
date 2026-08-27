@@ -1,0 +1,29 @@
+{
+    "name": "polish-profilarr-db",
+    "version": "1.0.0",
+    "description": "Polish-focused compact media Profilarr Compliant Database for Radarr and Sonarr",
+    "arr_types": ["radarr", "sonarr"],
+
+    "dependencies": {
+        "schema": "^1.1.0"
+    },
+
+    "authors": [
+        {
+            "name": "Marek Skrzyniarz"
+        }
+    ],
+
+    "license": "MIT",
+    "repository": "https://github.com/mskrzyniarz/profilarr-polish-db",
+
+    "tags": ["polish", "compact", "radarr", "sonarr", "language-priority"],
+
+    "links": {
+        "issues": "https://github.com/mskrzyniarz/profilarr-polish-db/issues"
+    },
+
+    "profilarr": {
+        "minimum_version": "2.0.0"
+    }
+}
