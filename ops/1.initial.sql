@@ -476,6 +476,74 @@ INSERT INTO quality_profile_tags (quality_profile_name, tag_name) VALUES ('Polis
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type) VALUES ('Polish Compact Movies', 'Any', 'simple');
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type) VALUES ('Polish Compact Series', 'Any', 'simple');
 
+-- Canonical quality metadata required by Profilarr when syncing Media Management.
+INSERT INTO qualities (name) VALUES ('WEBDL-2160p');
+INSERT INTO qualities (name) VALUES ('WEBRip-2160p');
+INSERT INTO qualities (name) VALUES ('Bluray-2160p');
+INSERT INTO qualities (name) VALUES ('WEBDL-1080p');
+INSERT INTO qualities (name) VALUES ('WEBRip-1080p');
+INSERT INTO qualities (name) VALUES ('Bluray-1080p');
+INSERT INTO qualities (name) VALUES ('HDTV-1080p');
+INSERT INTO qualities (name) VALUES ('WEBDL-720p');
+INSERT INTO qualities (name) VALUES ('WEBRip-720p');
+INSERT INTO qualities (name) VALUES ('Bluray-720p');
+INSERT INTO qualities (name) VALUES ('HDTV-720p');
+INSERT INTO qualities (name) VALUES ('Remux-2160p');
+INSERT INTO qualities (name) VALUES ('Remux-1080p');
+INSERT INTO qualities (name) VALUES ('BR-DISK');
+INSERT INTO qualities (name) VALUES ('DVD-R');
+INSERT INTO qualities (name) VALUES ('DVD');
+INSERT INTO qualities (name) VALUES ('SDTV');
+INSERT INTO qualities (name) VALUES ('DVDSCR');
+INSERT INTO qualities (name) VALUES ('TELECINE');
+INSERT INTO qualities (name) VALUES ('TELESYNC');
+INSERT INTO qualities (name) VALUES ('CAM');
+INSERT INTO qualities (name) VALUES ('WORKPRINT');
+
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WEBDL-2160p', 'radarr', 'WEBDL-2160p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WEBRip-2160p', 'radarr', 'WEBRip-2160p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('Bluray-2160p', 'radarr', 'Bluray-2160p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WEBDL-1080p', 'radarr', 'WEBDL-1080p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WEBRip-1080p', 'radarr', 'WEBRip-1080p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('Bluray-1080p', 'radarr', 'Bluray-1080p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('HDTV-1080p', 'radarr', 'HDTV-1080p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WEBDL-720p', 'radarr', 'WEBDL-720p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WEBRip-720p', 'radarr', 'WEBRip-720p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('Bluray-720p', 'radarr', 'Bluray-720p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('HDTV-720p', 'radarr', 'HDTV-720p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('Remux-2160p', 'radarr', 'Remux-2160p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('Remux-1080p', 'radarr', 'Remux-1080p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('BR-DISK', 'radarr', 'BR-DISK');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('DVD-R', 'radarr', 'DVD-R');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('DVD', 'radarr', 'DVD');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('SDTV', 'radarr', 'SDTV');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('DVDSCR', 'radarr', 'DVDSCR');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('TELECINE', 'radarr', 'TELECINE');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('TELESYNC', 'radarr', 'TELESYNC');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('CAM', 'radarr', 'CAM');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WORKPRINT', 'radarr', 'WORKPRINT');
+
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WEBDL-2160p', 'sonarr', 'WEBDL-2160p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WEBRip-2160p', 'sonarr', 'WEBRip-2160p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('Bluray-2160p', 'sonarr', 'Bluray-2160p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WEBDL-1080p', 'sonarr', 'WEBDL-1080p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WEBRip-1080p', 'sonarr', 'WEBRip-1080p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('Bluray-1080p', 'sonarr', 'Bluray-1080p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('HDTV-1080p', 'sonarr', 'HDTV-1080p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WEBDL-720p', 'sonarr', 'WEBDL-720p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WEBRip-720p', 'sonarr', 'WEBRip-720p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('Bluray-720p', 'sonarr', 'Bluray-720p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('HDTV-720p', 'sonarr', 'HDTV-720p');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('Remux-2160p', 'sonarr', 'Bluray-2160p Remux');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('Remux-1080p', 'sonarr', 'Bluray-1080p Remux');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('DVD', 'sonarr', 'DVD');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('SDTV', 'sonarr', 'SDTV');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('DVDSCR', 'sonarr', 'DVDSCR');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('TELECINE', 'sonarr', 'TELECINE');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('TELESYNC', 'sonarr', 'TELESYNC');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('CAM', 'sonarr', 'CAM');
+INSERT INTO quality_api_mappings (quality_name, arr_type, api_name) VALUES ('WORKPRINT', 'sonarr', 'WORKPRINT');
+
 -- Default delay profile for both Radarr and Sonarr: conservative timing, no custom-score bypass.
 INSERT INTO delay_profiles (name, preferred_protocol, usenet_delay, torrent_delay, bypass_if_highest_quality, bypass_if_above_custom_format_score, minimum_custom_format_score)
 VALUES ('Polish Compact Delay', 'prefer_torrent', 300, 300, 0, 0, NULL);
@@ -874,9 +942,11 @@ INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, 
 INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-1080p', 1500, 5000, 3300);
 INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-1080p', 1300, 4500, 3000);
 INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-1080p', 1700, 5500, 3600);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'HDTV-1080p', 900, 3500, 2000);
 INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-720p', 600, 1800, 1200);
 INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-720p', 500, 1600, 1000);
 INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-720p', 700, 2000, 1300);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'HDTV-720p', 350, 1200, 800);
 
 -- Sonarr: tuned for compact episodes and season packs (target ~1-3GB at 2160p, ~0.7-2GB at 1080p, ~0.35-1GB at 720p per episode)
 INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-2160p', 1000, 3000, 2100);
@@ -885,9 +955,11 @@ INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, 
 INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-1080p', 700, 2000, 1400);
 INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBRip-1080p', 600, 1800, 1200);
 INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-1080p', 800, 2200, 1500);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'HDTV-1080p', 500, 1400, 900);
 INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-720p', 350, 1000, 700);
 INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBRip-720p', 300, 900, 600);
 INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-720p', 400, 1100, 750);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'HDTV-720p', 250, 800, 550);
 
 -- ============================================================================
 -- TEST CORPUS
