@@ -451,7 +451,11 @@ INSERT INTO custom_format_tags (custom_format_name, tag_name) VALUES ('WEBRip So
 INSERT INTO quality_profiles (name, description, upgrades_allowed, minimum_custom_format_score, upgrade_until_score, upgrade_score_increment)
 VALUES (
     'Polish Compact Movies',
-    'Radarr profile focused on compact releases with strict Polish language priority tiers and hard bans.',
+    'Radarr profile focused on compact releases with strict Polish language priority tiers and hard bans.
+
+- Average Movie Sizes ~ 1.2 to 1.8gb per Movie (2160p), 0.7 to 1.5gb (1080p), 0.25 to 0.8gb (720p)
+- Movie Quality Ranking ~ 7/10
+- Compact size target keeps releases light while preserving Polish language priority and hard-ban safety.',
     1,
     0,
     589000,
@@ -461,7 +465,11 @@ VALUES (
 INSERT INTO quality_profiles (name, description, upgrades_allowed, minimum_custom_format_score, upgrade_until_score, upgrade_score_increment)
 VALUES (
     'Polish Compact Series',
-    'Sonarr profile focused on compact episode releases with strict Polish language priority tiers and hard bans.',
+    'Sonarr profile focused on compact episode releases with strict Polish language priority tiers and hard bans.
+
+- Average TV Sizes ~ 0.9 to 1.8gb per Episode (2160p), 0.35 to 1.3gb (1080p), 0.18 to 0.65gb (720p)
+- TV Quality Ranking ~ 7/10
+- Compact size target keeps season packs and episodes lightweight while preserving Polish language priority and hard-ban safety.',
     1,
     0,
     589000,

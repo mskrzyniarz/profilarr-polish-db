@@ -19,17 +19,19 @@ This database is designed to enforce a strict language-first selection strategy 
 
 ### Size Targets (Guideline)
 
-This database also targets compact file sizes as a practical baseline.
+This database targets compact, practical release sizes while keeping a strict language-first selection strategy.
 
 Movies (Radarr):
-- 2160p: usually around 5-8.5 GB (hard automatic rejection above 12 GB)
-- 1080p: usually around 2.5-5 GB
-- 720p: usually around 1-3 GB
+- 2160p: usually around 1.2-1.8 GB preferred range in quality definitions, with a hard automatic rejection above 12 GB
+- 1080p: usually around 0.7-1.5 GB
+- 720p: usually around 0.25-0.8 GB
 
 Episodes (Sonarr):
-- 2160p: usually around 1-3 GB per episode
-- 1080p: usually around 0.7-2 GB per episode
-- 720p: usually around 0.35-1 GB per episode
+- 2160p: usually around 0.9-1.8 GB per episode
+- 1080p: usually around 0.35-1.3 GB per episode
+- 720p: usually around 0.18-0.65 GB per episode
+
+These values are intentionally conservative and follow the current quality-definition contract used by Profilarr/Radarr, where size limits must remain inside the supported API range and stay valid for sync.
 
 ## Supported Applications
 
