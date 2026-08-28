@@ -776,7 +776,7 @@ INSERT INTO condition_sources (custom_format_name, condition_name, source) VALUE
 
 -- Size binding: max must be finite and greater than min for Radarr/Sonarr SizeSpecification validation.
 -- Values are tracked in bytes; 12 GiB minimum, 9999 GiB upper bound keeps the rule valid while remaining effectively unbounded.
-INSERT INTO condition_sizes (custom_format_name, condition_name, min_bytes, max_bytes) VALUES ('File Above 12GB', 'Above 12GB', 12 * 1024 * 1024 * 1024, 9999 * 1024 * 1024 * 1024);
+INSERT INTO condition_sizes (custom_format_name, condition_name, min_bytes, max_bytes) VALUES ('File Above 12GB', 'Above 12GB', 12884901888, 10736344498176);
 
 -- ============================================================================
 -- PROFILE CUSTOM FORMAT SCORING
