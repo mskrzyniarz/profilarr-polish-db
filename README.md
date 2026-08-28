@@ -22,16 +22,18 @@ This database is designed to enforce a strict language-first selection strategy 
 This database targets compact, practical release sizes while keeping a strict language-first selection strategy.
 
 Movies (Radarr):
-- 2160p: usually around 1.2-1.8 GB preferred range in quality definitions, with a hard automatic rejection above 12 GB
-- 1080p: usually around 0.7-1.5 GB
-- 720p: usually around 0.25-0.8 GB
+- 2160p: usually around 4-7 GB per movie, with a hard automatic rejection above 12 GB
+- 1080p: usually around 2.5-5 GB
+- 720p: usually up to 3 GB
 
 Episodes (Sonarr):
-- 2160p: usually around 0.9-1.8 GB per episode
-- 1080p: usually around 0.35-1.3 GB per episode
-- 720p: usually around 0.18-0.65 GB per episode
+- 2160p: usually around 2-4 GB per episode
+- 1080p: usually around 1-2 GB per episode
+- 720p: usually around 0.5-1 GB per episode
 
-These values are intentionally conservative and follow the current quality-definition contract used by Profilarr/Radarr, where size limits must remain inside the supported API range and stay valid for sync.
+These are the intended compact targets for the profile design. The synced Arr `quality_definitions` remain intentionally lower and API-compatible because Profilarr/Radarr enforce a supported size range for their media-management sync contract.
+
+Note: in Arr, `quality_definitions` are expressed in `MB/min`, not in total file size in GB. For example, a 2160p movie target of roughly 4-7 GB corresponds to a compact Arr definition range around 40-75 MB/min, while staying within the supported 0-2000 MB/min range enforced by the API.
 
 ## Supported Applications
 

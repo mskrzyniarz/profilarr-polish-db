@@ -453,9 +453,9 @@ VALUES (
     'Polish Compact Movies',
     'Radarr profile focused on compact releases with strict Polish language priority tiers and hard bans.
 
-- Average Movie Sizes ~ 1.2 to 1.8gb per Movie (2160p), 0.7 to 1.5gb (1080p), 0.25 to 0.8gb (720p)
-- Movie Quality Ranking ~ 7/10
-- Compact size target keeps releases light while preserving Polish language priority and hard-ban safety.',
+- Average Movie Sizes ~ 4 to 7gb per Movie (2160p), 2.5 to 5gb (1080p), up to 3gb (720p)
+- Movie Quality Ranking ~ 6/10
+- Compact size target keeps releases lightweight while preserving Polish language priority and hard-ban safety.',
     1,
     0,
     589000,
@@ -467,7 +467,7 @@ VALUES (
     'Polish Compact Series',
     'Sonarr profile focused on compact episode releases with strict Polish language priority tiers and hard bans.
 
-- Average TV Sizes ~ 0.9 to 1.8gb per Episode (2160p), 0.35 to 1.3gb (1080p), 0.18 to 0.65gb (720p)
+- Average TV Sizes ~ 2 to 4gb per Episode (2160p), 1 to 2gb (1080p), 0.5 to 1gb (720p)
 - TV Quality Ranking ~ 7/10
 - Compact size target keeps season packs and episodes lightweight while preserving Polish language priority and hard-ban safety.',
     1,
@@ -876,31 +876,32 @@ INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_
 -- Unit assumption follows Arr-style rate values to target compact outcomes.
 -- ============================================================================
 
--- Radarr/Sonarr quality definition API contract: max size is capped at 2000 and must satisfy Min <= Preferred <= Max.
--- Values are intentionally conservative and stay inside the range accepted by Radarr.
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-2160p', 1200, 2000, 1800);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-2160p', 1100, 2000, 1700);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-2160p', 1300, 2000, 1800);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-1080p', 800, 1800, 1400);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-1080p', 700, 1700, 1200);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-1080p', 900, 1800, 1500);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'HDTV-1080p', 400, 1400, 900);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-720p', 300, 1200, 800);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-720p', 250, 1000, 700);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-720p', 350, 1200, 800);
-INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'HDTV-720p', 200, 900, 600);
+-- Quality definition values are in MB/min and must remain within the Arr-supported 0..2000 range.
+-- These targets correspond to the compact profile goals: 2160p ~4-7 GB, 1080p ~2.5-5 GB, 720p up to ~3 GB for movies;
+-- and 2160p ~2-4 GB, 1080p ~1-2 GB, 720p up to ~1.5 GB for episodes.
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-2160p', 40, 70, 60);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-2160p', 35, 65, 55);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-2160p', 45, 75, 60);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-1080p', 25, 50, 35);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-1080p', 22, 45, 30);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-1080p', 28, 55, 38);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'HDTV-1080p', 18, 38, 25);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBDL-720p', 15, 30, 22);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'WEBRip-720p', 12, 28, 20);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'Bluray-720p', 16, 32, 24);
+INSERT INTO radarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Radarr', 'HDTV-720p', 10, 22, 15);
 
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-2160p', 1000, 2000, 1800);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBRip-2160p', 900, 2000, 1600);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-2160p', 1100, 2000, 1800);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-1080p', 700, 1800, 1300);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBRip-1080p', 600, 1600, 1200);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-1080p', 800, 1800, 1400);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'HDTV-1080p', 350, 1200, 800);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-720p', 250, 1000, 650);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBRip-720p', 220, 900, 550);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-720p', 300, 1000, 650);
-INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'HDTV-720p', 180, 800, 500);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-2160p', 20, 40, 30);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBRip-2160p', 18, 38, 28);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-2160p', 22, 42, 32);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-1080p', 10, 20, 15);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBRip-1080p', 9, 18, 13);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-1080p', 11, 22, 16);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'HDTV-1080p', 7, 16, 11);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBDL-720p', 6, 15, 10);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'WEBRip-720p', 5, 14, 9);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'Bluray-720p', 7, 16, 11);
+INSERT INTO sonarr_quality_definitions (name, quality_name, min_size, max_size, preferred_size) VALUES ('Polish Compact Sonarr', 'HDTV-720p', 4, 12, 8);
 
 -- ============================================================================
 -- TEST CORPUS
