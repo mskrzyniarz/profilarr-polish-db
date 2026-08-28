@@ -476,6 +476,10 @@ INSERT INTO quality_profile_tags (quality_profile_name, tag_name) VALUES ('Polis
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type) VALUES ('Polish Compact Movies', 'Any', 'simple');
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type) VALUES ('Polish Compact Series', 'Any', 'simple');
 
+-- Default delay profile for both Radarr and Sonarr: conservative timing, no custom-score bypass.
+INSERT INTO delay_profiles (name, preferred_protocol, usenet_delay, torrent_delay, bypass_if_highest_quality, bypass_if_above_custom_format_score, minimum_custom_format_score)
+VALUES ('Polish Compact Delay', 'prefer_torrent', 300, 300, 0, 0, NULL);
+
 -- ============================================================================
 -- PROFILE QUALITY ORDERING
 -- ============================================================================

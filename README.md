@@ -45,6 +45,19 @@ Episodes (Sonarr):
 	- `Polish Compact Series` to Sonarr
 4. Sync custom formats, profiles, and quality definitions.
 
+## Delay Profile
+
+A default delay profile is included in the database:
+
+- `Polish Compact Delay`
+- preferred protocol: `prefer_torrent`
+- usenet delay: `300` minutes
+- torrent delay: `300` minutes
+- bypass on highest quality: disabled
+- bypass on custom-format score: disabled
+
+This keeps download timing conservative while still allowing each profile to prefer the best Polish-language release without forcing an aggressive bypass strategy.
+
 ## Language Priority System
 
 Primary tier scores:
