@@ -774,8 +774,9 @@ INSERT INTO condition_resolutions (custom_format_name, condition_name, resolutio
 INSERT INTO condition_sources (custom_format_name, condition_name, source) VALUES ('WEB-DL Source', 'WEBDL', 'WEBDL');
 INSERT INTO condition_sources (custom_format_name, condition_name, source) VALUES ('WEBRip Source', 'WEBRip', 'WEBRIP');
 
--- Size binding
-INSERT INTO condition_sizes (custom_format_name, condition_name, min_bytes, max_bytes) VALUES ('File Above 12GB', 'Above 12GB', 12884901889, NULL);
+-- Size binding: max must be finite and greater than min for Radarr/Sonarr SizeSpecification validation.
+-- Values are tracked in bytes; 12 GiB minimum, 9999 GiB upper bound keeps the rule valid while remaining effectively unbounded.
+INSERT INTO condition_sizes (custom_format_name, condition_name, min_bytes, max_bytes) VALUES ('File Above 12GB', 'Above 12GB', 12 * 1024 * 1024 * 1024, 9999 * 1024 * 1024 * 1024);
 
 -- ============================================================================
 -- PROFILE CUSTOM FORMAT SCORING
